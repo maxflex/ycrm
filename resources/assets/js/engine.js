@@ -228,7 +228,7 @@
 
 	// Установить scope
 	function setScope() {
-		scope = angular.element('[ng-app=Egecms]').scope()
+		scope = angular.element('[ng-app=Yachts]').scope()
 	}
 
 

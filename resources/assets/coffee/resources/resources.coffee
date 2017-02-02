@@ -17,6 +17,12 @@ angular.module('Yachts')
             checkExistance:
                 method: 'POST'
                 url: apiPath('pages', 'checkExistance')
+    .factory 'Photo', ($resource) ->
+        $resource apiPath('photos'),
+            id: '@id'
+            photo: '@photo'
+        , delete:
+            method: 'DELETE'
 
 apiPath = (entity, additional = '') ->
     "api/#{entity}/" + (if additional then additional + '/' else '') + ":id"

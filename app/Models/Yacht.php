@@ -2,12 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Shared\Model;
 
 class Yacht extends Model
 {
     protected $fillable = [
         'title',
-        'desc'
+        'desc',
+        'photos',
     ];
+
+    protected $commaSeparated = [
+        'photos',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($model) {
+            foreach ($model->photos as $photo) {
+                \Storage::delete('yachts/' . $photo);
+            }
+        });
+    }
 }
