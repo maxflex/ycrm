@@ -25,7 +25,6 @@
     "angular": "angularjs#1.4.12",
     "jquery.inputmask": "~3.2.5",
     "jquery-ui": "jquery.ui#1.11.4",
-    "angular-animate": "~1.4.8",
     "angular-sanitize": "~1.4.8",
     "angular-resource": "~1.4.8",
     "nprogress": "~0.2.0",
@@ -59,6 +58,7 @@
     "ace": "^1.2.5",
     "requirejs": "^2.2.0",
     "angular-file-upload": "^2.3.4",
-    "ng-tags-input": "3.1.1"
+    "ng-image-gallery": "^2.0.8",
+    "angular-animate": "^1.6.1"
   }
 }

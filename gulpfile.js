@@ -22,6 +22,10 @@ const elixir = require('laravel-elixir');
      return bower_scripts
  }
 
+fileFromBower = (file) => {
+    return `resources/assets/bower/${file}`
+}
+
  elixir(function(mix) {
      mix
         .browserSync({
@@ -32,12 +36,13 @@ const elixir = require('laravel-elixir');
             https: true
         })
          .sass('app.scss')
+         .copy(fileFromBower('ng-image-gallery/res/icons'), 'public/img/icons')
          .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'])
          .scripts(jsFromBower([
              'jquery/dist/jquery',
              'bootstrap/dist/js/bootstrap.min',
              'angular/angular.min',
-             'angular-animate/angular-animate.min',
+             'angular-animate/angular-animate',
              'angular-sanitize/angular-sanitize.min',
              'angular-resource/angular-resource.min',
              'angular-aria/angular-aria.min',
@@ -70,7 +75,6 @@ const elixir = require('laravel-elixir');
              'ace-builds/src/mode-json',
              'ace/lib/ace/commands/default_commands',
              'angular-file-upload/dist/angular-file-upload.min',
-             'jquery.maskedinput/dist/jquery.maskedinput.min',
-             'ng-tags-input/ng-tags-input.min'
+             'jquery.maskedinput/dist/jquery.maskedinput.min'
          ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
  });

@@ -1,7 +1,7 @@
 (function() {
   var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  angular.module("Yachts", ['ngSanitize', 'ngResource', 'ngAnimate', 'ui.sortable', 'ui.bootstrap', 'angular-ladda', 'angularFileUpload', 'ngTagsInput']).config([
+  angular.module("Yachts", ['ngSanitize', 'ngResource', 'ngAnimate', 'ui.sortable', 'ui.bootstrap', 'angular-ladda', 'angularFileUpload', 'thatisuday.ng-image-gallery']).config([
     '$compileProvider', function($compileProvider) {
       return $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|sip):/);
     }
@@ -219,15 +219,28 @@
 }).call(this);
 
 (function() {
-  angular.module('Yachts').controller('YachtsIndex', function($scope, $attrs, IndexService, Yacht) {
+  angular.module('Yachts').config(function(ngImageGalleryOptsProvider) {
+    return ngImageGalleryOptsProvider.setOpts({
+      thumbnails: true,
+      inline: false,
+      imgBubbles: false,
+      bgClose: true,
+      imgAnim: 'fadeup'
+    });
+  }).controller('YachtsIndex', function($scope, $attrs, IndexService, Yacht) {
     bindArguments($scope, arguments);
     return angular.element(document).ready(function() {
       return IndexService.init(Yacht, $scope.current_page, $attrs);
     });
-  }).controller('YachtsForm', function($scope, $attrs, $timeout, FormService, Yacht) {
+  }).controller('YachtsForm', function($scope, $attrs, $timeout, FormService, Yacht, PhotoService) {
     bindArguments($scope, arguments);
-    return angular.element(document).ready(function() {
+    angular.element(document).ready(function() {
       return FormService.init(Yacht, $scope.id, $scope.model);
+    });
+    return $scope.$watchCollection('FormService.model.photos', function(newVal, oldVal) {
+      if (newVal !== void 0) {
+        return $scope.images = PhotoService.getImages();
+      }
     });
   });
 
@@ -623,6 +636,75 @@
 }).call(this);
 
 (function() {
+  angular.module('Yachts').service('PhotoService', function($http, Photo, FileUploader, FormService, YachtsUploadDir) {
+    var getFullUrl;
+    getFullUrl = function(image) {
+      return 'storage/' + YachtsUploadDir + image;
+    };
+    this.test = function() {
+      console.log(this.test2, this.onSuccessItemCallback);
+      return '===========================================';
+    };
+    this.Uploader = new FileUploader({
+      url: 'api/photos',
+      alias: 'photos',
+      filters: [
+        {
+          name: 'imageFilter',
+          fn: function(file, options) {
+            var type;
+            type = "|" + (file.type.slice(file.type.lastIndexOf('/') + 1)) + "|";
+            return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+          }
+        }
+      ],
+      autoUpload: true,
+      removeAfterUpload: true
+    });
+    this.Uploader.onBeforeUploadItem = function(item) {
+      return item.formData.push({
+        yacht_id: scope.id
+      });
+    };
+    this.Uploader.onSuccessItem = (function(_this) {
+      return function(item, response) {
+        if (!FormService.model.photos) {
+          FormService.model.photos = [];
+        }
+        FormService.model.photos.push(response);
+        console.log('func', _this.onSuccessItemCallback);
+        if (typeof _this.onSuccessItemCallback === 'function') {
+          _this.onSuccessItemCallback();
+          return console.log('CB');
+        }
+      };
+    })(this);
+    this.getImages = function() {
+      var images;
+      images = [];
+      FormService.model.photos.forEach(function(image) {
+        return images.push({
+          url: getFullUrl(image)
+        });
+      });
+      return images;
+    };
+    this["delete"] = function(index) {
+      var photo;
+      console.log('Deleting', index);
+      photo = FormService.model.photos[index];
+      Photo["delete"]({
+        id: scope.id || 0,
+        photo: photo
+      });
+      return FormService.model.photos = _.without(FormService.model.photos, photo);
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Yachts').factory('Yacht', function($resource) {
@@ -652,6 +734,15 @@
       checkExistance: {
         method: 'POST',
         url: apiPath('pages', 'checkExistance')
+      }
+    });
+  }).factory('Photo', function($resource) {
+    return $resource(apiPath('photos'), {
+      id: '@id',
+      photo: '@photo'
+    }, {
+      "delete": {
+        method: 'DELETE'
       }
     });
   });

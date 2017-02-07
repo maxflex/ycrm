@@ -6,10 +6,15 @@ use Shared\Model;
 
 class Yacht extends Model
 {
+    const UPLOAD_DIR = 'img/yachts/';
+
     protected $fillable = [
         'title',
         'desc',
+        'capacity',
         'photos',
+        'weight',
+        'price',
     ];
 
     protected $commaSeparated = [
@@ -18,11 +23,9 @@ class Yacht extends Model
 
     protected static function boot()
     {
-        parent::boot();
-
         static::deleted(function ($model) {
             foreach ($model->photos as $photo) {
-                \Storage::delete('yachts/' . $photo);
+                \Storage::delete(self::UPLOAD_DIR . $photo);
             }
         });
     }

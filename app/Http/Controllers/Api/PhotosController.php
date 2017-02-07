@@ -19,19 +19,15 @@ class PhotosController extends Controller
      */
     public function store(Request $request)
     {
-        $yacht_id = intval($request->input('yacht_id'));
         if ($request->hasFile('photos')) {
-            $fileExtension = $request->file('photos')->extension();
-            $fileName = rand() . rand() . rand() . '.' . $fileExtension;
-
-            $request->file('photos')->storeAs('yachts', $fileName);
-
-            if ($yacht_id && ($yacht = Yacht::find($yacht_id))) {
-                $yacht->photos = array_merge($yacht->photos, [$fileName]);
+            $extension = $request->file('photos')->extension();
+            $photo = uniqid() . '.' . $extension;
+            $request->file('photos')->storeAs(Yacht::UPLOAD_DIR, $photo);
+            if ($request->yacht_id && ($yacht = Yacht::find($request->yacht_id))) {
+                $yacht->photos = array_merge($yacht->photos, [$photo]);
                 $yacht->save();
             }
-
-            return $fileName;
+            return $photo;
         } else {
             abort(400);
         }
@@ -55,10 +51,10 @@ class PhotosController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        if($id && ($yacht = Yacht::find($id))) {
-            $yacht->photos =  array_diff($yacht->photos, [$request->input('photo')]);
+        if ($id && ($yacht = Yacht::find($id))) {
+            $yacht->photos = array_diff($yacht->photos, [$request->photo]);
             $yacht->save();
         }
-        Storage::delete('yachts/' . $request->input('photo'));
+        Storage::delete(Yacht::UPLOAD_DIR . $request->photo);
     }
 }

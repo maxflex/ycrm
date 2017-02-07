@@ -4020,3 +4020,28 @@ label {
 .useful-width {
     width: calc(100% - 32px);
 }
+
+input[type='file'] {
+    display: none;
+}
+
+.thumb {
+    position: relative;
+    & .delete-photo {
+        display: none;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        color: $red;
+    }
+    &:hover {
+        & .delete-photo {
+            display: block;
+            opacity: .5;
+            z-index: 99;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

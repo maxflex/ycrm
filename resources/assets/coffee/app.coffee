@@ -1,4 +1,4 @@
-angular.module("Yachts", ['ngSanitize', 'ngResource', 'ngAnimate', 'ui.sortable', 'ui.bootstrap', 'angular-ladda', 'angularFileUpload', 'ngTagsInput'])
+angular.module("Yachts", ['ngSanitize', 'ngResource', 'ngAnimate', 'ui.sortable', 'ui.bootstrap', 'angular-ladda', 'angularFileUpload', 'thatisuday.ng-image-gallery'])
     .config [
         '$compileProvider'
         ($compileProvider) ->

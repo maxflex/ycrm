@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPhotosColumnToYachts extends Migration
+class AddWeightToYachts extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddPhotosColumnToYachts extends Migration
     public function up()
     {
         Schema::table('yachts', function (Blueprint $table) {
-            $table->string('photos', 1000);
+            $table->integer('weight')->unsigned()->nullable();
+            $table->integer('price')->unsigned()->nullable();
         });
     }
 
@@ -26,7 +27,7 @@ class AddPhotosColumnToYachts extends Migration
     public function down()
     {
         Schema::table('yachts', function (Blueprint $table) {
-            $table->dropColumn('photos');
+            //
         });
     }
 }
