@@ -15,6 +15,12 @@ class Yacht extends Model
         'photos',
         'weight',
         'price',
+        'cabin_count',
+        'room_count',
+        'engine_count',
+        'length',
+        'horse_power',
+        'rent_price'
     ];
 
     protected $commaSeparated = [

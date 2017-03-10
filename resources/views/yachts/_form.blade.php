@@ -3,14 +3,42 @@
         @include('modules.input', ['title' => 'название яхты', 'model' => 'title'])
     </div>
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'вместимость', 'model' => 'capacity'])
+        @include('modules.input', ['title' => 'количество пассажиров', 'model' => 'capacity'])
     </div>
     <div class="col-sm-3">
         @include('modules.input', ['title' => 'масса', 'model' => 'weight'])
     </div>
     <div class="col-sm-3">
+        @include('modules.input', ['title' => 'длина', 'model' => 'length'])
+    </div>
+</div>
+<div class="row mb">
+    <div class="col-sm-3">
+        @include('modules.input', ['title' => 'колколичество кают', 'model' => 'cabin_count'])
+    </div>
+    <div class="col-sm-3">
+        @include('modules.input', ['title' => 'количество спальных мест', 'model' => 'room_count'])
+    </div>
+    <div class="col-sm-3">
+        @include('modules.input', ['title' => 'количество моторов', 'model' => 'engine_count'])
+    </div>
+    <div class="col-sm-3">
+        @include('modules.input', ['title' => 'мощность моторов', 'model' => 'horse_power'])
+    </div>
+</div>
+<div class="row mb">
+    <div class="col-sm-3">
+        @include('modules.input', ['title' => 'стоимость аренды', 'model' => 'rent_price'])
+    </div>
+    <div class="col-sm-3">
         @include('modules.input', ['title' => 'цена', 'model' => 'price'])
     </div>
+    {{-- <div class="col-sm-3">
+        @include('modules.input', ['title' => 'количество моторов', 'model' => 'engine_count'])
+    </div>
+    <div class="col-sm-3">
+        @include('modules.input', ['title' => 'мощность моторов', 'model' => 'horse_power'])
+    </div> --}}
 </div>
 <div class="row mb">
     <div class="col-sm-12">
