@@ -3,10 +3,10 @@
         @include('modules.input', ['title' => 'название яхты', 'model' => 'title'])
     </div>
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'количество пассажиров', 'model' => 'capacity'])
+        @include('modules.input', ['title' => 'материал корпуса', 'model' => 'material'])
     </div>
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'масса', 'model' => 'weight'])
+        @include('modules.input', ['title' => 'год выпуска', 'model' => 'year'])
     </div>
     <div class="col-sm-3">
         @include('modules.input', ['title' => 'длина', 'model' => 'length'])

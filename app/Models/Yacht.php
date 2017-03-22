@@ -11,16 +11,16 @@ class Yacht extends Model
     protected $fillable = [
         'title',
         'desc',
-        'capacity',
         'photos',
-        'weight',
         'price',
         'cabin_count',
         'room_count',
         'engine_count',
         'length',
         'horse_power',
-        'rent_price'
+        'rent_price',
+        'year',
+        'material'
     ];
 
     protected $commaSeparated = [
