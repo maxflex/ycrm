@@ -13,7 +13,7 @@
                 <a href='yachts/@{{ model.id }}/edit'>@{{ model.name }}</a>
             </td>
             <td>
-                @{{ model.desc }}
+                @{{ model.description }}
             </td>
         </tr>
     </table>
