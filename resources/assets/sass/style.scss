@@ -3705,10 +3705,13 @@ display: flex;
 margin-left: 0;
 margin-right: 0;
 margin-bottom: 20px;
-& > div {
-    flex: 1;
-    margin-right: 10px;
-}
+    & > div {
+        flex: 1;
+        margin-right: 10px;
+        &:last-child {
+            margin-right: 0 !important;
+        };
+    }
 }
 
 .fix-viewport {

@@ -193,3 +193,12 @@
        $allowed = \App\Models\User::fromSession()->allowed($right);
        return $return_int ? (int)$allowed : $allowed;
    }
+
+   function jsonOptions($arr)
+   {
+       $return = [];
+       foreach($arr as $id => $title) {
+           $return[] = compact('id', 'title');
+       }
+       return json_encode($return);
+   }

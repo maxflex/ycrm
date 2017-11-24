@@ -1,48 +1,126 @@
+<h4 style='margin-top: 0'>Общие технические характеристики</h4>
 <div class="row mb">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         @include('modules.input', ['title' => 'название яхты', 'model' => 'title'])
     </div>
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'стоимость аренды', 'model' => 'price'])
+    </div>
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'местоположение', 'model' => 'location'])
+    </div>
+</div>
+<div class="row mb">
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'кол-во человек (гости)', 'model' => 'guests_capacity'])
+    </div>
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'кол-во человек (персонал)', 'model' => 'staff_capacity'])
+    </div>
+    <div class="col-sm-4">
+        <label class="no-margin-bottom label-opacity">обязателен шкипер/матросы</label>
+        <ng-select-new model='FormService.model.skipper_required' object="YesNo" label="title" convert-to-number></ng-select-new>
+    </div>
+</div>
+
+<h4 style='margin: 40px 0 10px'>Мотор</h4>
+<div class="row mb">
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'двигатель', 'model' => 'engine'])
+    </div>
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'мощность', 'model' => 'power'])
+    </div>
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'кол-во моторов', 'model' => 'motors'])
+    </div>
+</div>
+<div class="row mb">
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'максимальная скорость', 'model' => 'max_speed'])
+    </div>
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'крейсерская скорость', 'model' => 'cruising_speed'])
+    </div>
+    <div class="col-sm-4">
+        @include('modules.input', ['title' => 'расход топлива (запас хода)', 'model' => 'fuel_consumption'])
+    </div>
+</div>
+
+
+<h4 style='margin: 40px 0 10px'>Размеры</h4>
+<div class="row mb flex-list">
+    <div>
+        @include('modules.input', ['title' => 'габаритная длина', 'model' => 'length'])
+    </div>
+    <div>
+        @include('modules.input', ['title' => 'ширина (бимс)', 'model' => 'width'])
+    </div>
+    <div>
+        @include('modules.input', ['title' => 'осадка', 'model' => 'draught'])
+    </div>
+    <div>
+        @include('modules.input', ['title' => 'объем баков для воды', 'model' => 'water_capacity'])
+    </div>
+    <div style='margin: 0'>
+        @include('modules.input', ['title' => 'объем топливного бака', 'model' => 'gas_capacity'])
+    </div>
+</div>
+
+
+<h4 style='margin: 40px 0 10px'>Общие</h4>
+<div class="row mb">
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'материал корпуса', 'model' => 'material'])
+        <label class="no-margin-bottom label-opacity">тип судна</label>
+        <ng-select-new model='FormService.model.type' object='{{ jsonOptions(\App\Models\Yacht::TYPES) }}' label="title" convert-to-number></ng-select-new>
     </div>
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'год выпуска', 'model' => 'year'])
+        <label class="no-margin-bottom label-opacity">корпус</label>
+        <ng-select-new model='FormService.model.body' object='{{ jsonOptions(\App\Models\Yacht::BODIES) }}' label="title" convert-to-number></ng-select-new>
     </div>
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'длина', 'model' => 'length'])
+        @include('modules.input', ['title' => 'год постройки', 'model' => 'year'])
+    </div>
+    <div class="col-sm-3">
+        @include('modules.input', ['title' => 'кол-во спальных мест', 'model' => 'beds'])
     </div>
 </div>
 <div class="row mb">
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'колколичество кают', 'model' => 'cabin_count'])
+        @include('modules.input', ['title' => 'кол-во кают', 'model' => 'cabins'])
     </div>
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'количество спальных мест', 'model' => 'room_count'])
+        @include('modules.input', ['title' => 'кол-во кают для экипажа', 'model' => 'staff_cabins'])
     </div>
     <div class="col-sm-3">
-        @include('modules.input', ['title' => 'количество моторов', 'model' => 'engine_count'])
-    </div>
-    <div class="col-sm-3">
-        @include('modules.input', ['title' => 'мощность моторов', 'model' => 'horse_power'])
+        @include('modules.input', ['title' => 'гальюн (туалет)', 'model' => 'toilets'])
     </div>
 </div>
-<div class="row mb">
-    <div class="col-sm-3">
-        @include('modules.input', ['title' => 'стоимость аренды', 'model' => 'rent_price'])
+
+<div ng-show="FormService.model.type == 2">
+    <h4 style='margin: 40px 0 10px'>Паруса и такелаж</h4>
+    <div class="row mb flex-list">
+        <div>
+            @include('modules.input', ['title' => 'грот', 'model' => 'grot'])
+        </div>
+        <div>
+            @include('modules.input', ['title' => 'генуя', 'model' => 'genuya'])
+        </div>
+        <div>
+            @include('modules.input', ['title' => 'спинакер', 'model' => 'spinaker'])
+        </div>
+        <div>
+            @include('modules.input', ['title' => 'генакер', 'model' => 'genaker'])
+        </div>
+        <div style='margin: 0'>
+            @include('modules.input', ['title' => 'ловушка грота', 'model' => 'grot_trap'])
+        </div>
     </div>
-    <div class="col-sm-3">
-        @include('modules.input', ['title' => 'цена', 'model' => 'price'])
-    </div>
-    {{-- <div class="col-sm-3">
-        @include('modules.input', ['title' => 'количество моторов', 'model' => 'engine_count'])
-    </div>
-    <div class="col-sm-3">
-        @include('modules.input', ['title' => 'мощность моторов', 'model' => 'horse_power'])
-    </div> --}}
 </div>
+
 <div class="row mb">
     <div class="col-sm-12">
-        @include('modules.input', ['title' => 'описание яхты', 'model' => 'desc', 'textarea' => true])
+        @include('modules.input', ['title' => 'описание яхты', 'model' => 'description', 'textarea' => true])
     </div>
 </div>
 <div id='yacht-photos'>
@@ -59,17 +137,4 @@
             <ng-image-gallery images="images"></ng-image-gallery>
         </div>
     </div>
-    {{-- <div id='items' class='row mb'>
-        <div class="col-sm-12">
-            <ul>
-                <li ng-repeat='photo in FormService.model.photos track by $index'>
-                    <img ng-src='storage/img/yachts/@{{ photo }}' class='img-thumbnail'>
-
-                    <button type="button" class='btn btn-danger btn-xs' ng-click='PhotoService.delete(photo)'>удалить</button>
-                </li>
-            </ul>
-        </div>
-    </div> --}}
 </div>
-
-{{-- @include('docs.commands') --}}

@@ -232,7 +232,7 @@
     return angular.element(document).ready(function() {
       return IndexService.init(Yacht, $scope.current_page, $attrs);
     });
-  }).controller('YachtsForm', function($scope, $attrs, $timeout, FormService, Yacht, PhotoService) {
+  }).controller('YachtsForm', function($scope, $attrs, $timeout, FormService, Yacht, PhotoService, YesNo) {
     bindArguments($scope, arguments);
     angular.element(document).ready(function() {
       return FormService.init(Yacht, $scope.id, $scope.model);
@@ -473,6 +473,14 @@
       id: 1,
       title: 'опубликовано'
     }
+  ]).value('YesNo', [
+    {
+      id: 0,
+      title: 'нет'
+    }, {
+      id: 1,
+      title: 'да'
+    }
   ]).value('UpDown', [
     {
       id: 1,
@@ -482,6 +490,74 @@
       title: 'внизу'
     }
   ]);
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Yachts').factory('Yacht', function($resource) {
+    return $resource(apiPath('yachts'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Tag', function($resource) {
+    return $resource(apiPath('tags'), {
+      id: '@id'
+    }, {
+      update: {
+        method: 'PUT'
+      },
+      autocomplete: {
+        method: 'GET',
+        url: apiPath('tags', 'autocomplete'),
+        isArray: true
+      }
+    });
+  }).factory('Page', function($resource) {
+    return $resource(apiPath('pages'), {
+      id: '@id'
+    }, {
+      update: {
+        method: 'PUT'
+      },
+      checkExistance: {
+        method: 'POST',
+        url: apiPath('pages', 'checkExistance')
+      }
+    });
+  }).factory('Photo', function($resource) {
+    return $resource(apiPath('photos'), {
+      id: '@id',
+      photo: '@photo'
+    }, {
+      "delete": {
+        method: 'DELETE'
+      }
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 
@@ -701,74 +777,6 @@
     };
     return this;
   });
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Yachts').factory('Yacht', function($resource) {
-    return $resource(apiPath('yachts'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Tag', function($resource) {
-    return $resource(apiPath('tags'), {
-      id: '@id'
-    }, {
-      update: {
-        method: 'PUT'
-      },
-      autocomplete: {
-        method: 'GET',
-        url: apiPath('tags', 'autocomplete'),
-        isArray: true
-      }
-    });
-  }).factory('Page', function($resource) {
-    return $resource(apiPath('pages'), {
-      id: '@id'
-    }, {
-      update: {
-        method: 'PUT'
-      },
-      checkExistance: {
-        method: 'POST',
-        url: apiPath('pages', 'checkExistance')
-      }
-    });
-  }).factory('Photo', function($resource) {
-    return $resource(apiPath('photos'), {
-      id: '@id',
-      photo: '@photo'
-    }, {
-      "delete": {
-        method: 'DELETE'
-      }
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 
