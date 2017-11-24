@@ -10,7 +10,7 @@
     <table class="table">
         <tr ng-repeat="model in IndexService.page.data">
             <td>
-                <a href='yachts/@{{ model.id }}/edit'>@{{ model.title }}</a>
+                <a href='yachts/@{{ model.id }}/edit'>@{{ model.name }}</a>
             </td>
             <td>
                 @{{ model.desc }}
