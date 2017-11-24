@@ -1,7 +1,7 @@
 <h4 style='margin-top: 0'>Общие технические характеристики</h4>
 <div class="row mb">
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'название яхты', 'model' => 'title'])
+        @include('modules.input', ['title' => 'название яхты', 'model' => 'name'])
     </div>
     <div class="col-sm-4">
         @include('modules.input', ['title' => 'стоимость аренды', 'model' => 'price'])
