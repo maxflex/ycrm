@@ -41,6 +41,7 @@ class Yacht extends Model
         "genaker",
         "grot_trap",
         "description",
+        "photos",
     ];
 
     protected $commaSeparated = [
