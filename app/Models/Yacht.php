@@ -7,7 +7,8 @@ use Shared\Model;
 class Yacht extends Model
 {
     const UPLOAD_DIR = 'img/yachts/';
-    const TYPES = ['катер', 'моторная яхта', 'парусная яхта'];
+    const TYPES = ['катер', 'моторная яхта', 'парусная яхта', 'яхта с флайбриджем'];
+    const GAS_TYPES = ['дизель', 'бензин'];
     const BODIES = ['алюминий', 'стеклопластик'];
 
     protected $fillable = [
@@ -42,6 +43,8 @@ class Yacht extends Model
         "grot_trap",
         "description",
         "photos",
+        "manufacturer",
+        "gas_type"
     ];
 
     protected $commaSeparated = [

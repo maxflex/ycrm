@@ -69,30 +69,37 @@
 
 
 <h4 style='margin: 40px 0 10px'>Общие</h4>
-<div class="row mb">
-    <div class="col-sm-3">
+<div class="row mb flex-list">
+    <div>
         <label class="no-margin-bottom label-opacity">тип судна</label>
         <ng-select-new model='FormService.model.type' object='{{ jsonOptions(\App\Models\Yacht::TYPES) }}' label="title" convert-to-number></ng-select-new>
     </div>
-    <div class="col-sm-3">
+    <div>
+        <label class="no-margin-bottom label-opacity">тип топлива</label>
+        <ng-select-new model='FormService.model.gas_type' object='{{ jsonOptions(\App\Models\Yacht::GAS_TYPES) }}' label="title" convert-to-number></ng-select-new>
+    </div>
+    <div>
         <label class="no-margin-bottom label-opacity">корпус</label>
         <ng-select-new model='FormService.model.body' object='{{ jsonOptions(\App\Models\Yacht::BODIES) }}' label="title" convert-to-number></ng-select-new>
     </div>
-    <div class="col-sm-3">
+    <div>
         @include('modules.input', ['title' => 'год постройки', 'model' => 'year'])
     </div>
-    <div class="col-sm-3">
+    <div>
         @include('modules.input', ['title' => 'кол-во спальных мест', 'model' => 'beds'])
     </div>
 </div>
-<div class="row mb">
-    <div class="col-sm-3">
+<div class="row mb flex-list">
+    <div>
+        @include('modules.input', ['title' => 'производитель', 'model' => 'manufacturer'])
+    </div>
+    <div>
         @include('modules.input', ['title' => 'кол-во кают', 'model' => 'cabins'])
     </div>
-    <div class="col-sm-3">
+    <div>
         @include('modules.input', ['title' => 'кол-во кают для экипажа', 'model' => 'staff_cabins'])
     </div>
-    <div class="col-sm-3">
+    <div>
         @include('modules.input', ['title' => 'гальюн (туалет)', 'model' => 'toilets'])
     </div>
 </div>
