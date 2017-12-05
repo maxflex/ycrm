@@ -29,7 +29,7 @@
         @include('modules.input', ['title' => 'двигатель', 'model' => 'engine'])
     </div>
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'мощность', 'model' => 'power'])
+        @include('modules.input', ['title' => 'мощность, л.с.', 'model' => 'power'])
     </div>
     <div class="col-sm-4">
         @include('modules.input', ['title' => 'кол-во моторов', 'model' => 'motors'])
@@ -37,13 +37,13 @@
 </div>
 <div class="row mb">
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'максимальная скорость', 'model' => 'max_speed'])
+        @include('modules.input', ['title' => 'максимальная скорость, узлы', 'model' => 'max_speed'])
     </div>
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'крейсерская скорость', 'model' => 'cruising_speed'])
+        @include('modules.input', ['title' => 'крейсерская скорость, узлы', 'model' => 'cruising_speed'])
     </div>
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'расход топлива (запас хода)', 'model' => 'fuel_consumption'])
+        @include('modules.input', ['title' => 'расход топлива', 'model' => 'fuel_consumption'])
     </div>
 </div>
 
@@ -54,10 +54,10 @@
         @include('modules.input', ['title' => 'габаритная длина', 'model' => 'length'])
     </div>
     <div>
-        @include('modules.input', ['title' => 'ширина (бимс)', 'model' => 'width'])
+        @include('modules.input', ['title' => 'ширина, бимс', 'model' => 'width'])
     </div>
     <div>
-        @include('modules.input', ['title' => 'осадка', 'model' => 'draught'])
+        @include('modules.input', ['title' => 'осадка, м', 'model' => 'draught'])
     </div>
     <div>
         @include('modules.input', ['title' => 'объем баков для воды', 'model' => 'water_capacity'])
@@ -83,15 +83,18 @@
         <ng-select-new model='FormService.model.body' object='{{ jsonOptions(\App\Models\Yacht::BODIES) }}' label="title" convert-to-number></ng-select-new>
     </div>
     <div>
-        @include('modules.input', ['title' => 'год постройки', 'model' => 'year'])
+        @include('modules.input', ['title' => 'производитель', 'model' => 'manufacturer'])
     </div>
     <div>
-        @include('modules.input', ['title' => 'кол-во спальных мест', 'model' => 'beds'])
+        @include('modules.input', ['title' => 'год постройки', 'model' => 'year'])
     </div>
 </div>
 <div class="row mb flex-list">
     <div>
-        @include('modules.input', ['title' => 'производитель', 'model' => 'manufacturer'])
+        @include('modules.input', ['title' => 'кол-во спальных мест', 'model' => 'beds'])
+    </div>
+    <div>
+        @include('modules.input', ['title' => 'кол-во спальных мест для экипажа', 'model' => 'staff_beds'])
     </div>
     <div>
         @include('modules.input', ['title' => 'кол-во кают', 'model' => 'cabins'])
@@ -101,9 +104,6 @@
     </div>
     <div>
         @include('modules.input', ['title' => 'гальюн (туалет)', 'model' => 'toilets'])
-    </div>
-    <div>
-        
     </div>
 </div>
 
