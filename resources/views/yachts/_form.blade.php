@@ -43,7 +43,7 @@
         @include('modules.input', ['title' => 'крейсерская скорость, узлы', 'model' => 'cruising_speed'])
     </div>
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'расход топлива', 'model' => 'fuel_consumption'])
+        @include('modules.input', ['title' => 'запас хода', 'model' => 'fuel_consumption'])
     </div>
 </div>
 
