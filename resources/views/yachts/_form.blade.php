@@ -69,7 +69,7 @@
 
 
 <h4 style='margin: 40px 0 10px'>Общие</h4>
-<div class="row mb flex-list">
+<div class="row flex-list">
     <div>
         <label class="no-margin-bottom label-opacity">тип судна</label>
         <ng-select-new model='FormService.model.type' object='{{ jsonOptions(\App\Models\Yacht::TYPES) }}' label="title" convert-to-number></ng-select-new>
@@ -101,6 +101,9 @@
     </div>
     <div>
         @include('modules.input', ['title' => 'гальюн (туалет)', 'model' => 'toilets'])
+    </div>
+    <div>
+        
     </div>
 </div>
 
