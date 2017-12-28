@@ -37,13 +37,13 @@
 </div>
 <div class="row mb">
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'максимальная скорость, узлы', 'model' => 'max_speed'])
+        @include('modules.input', ['title' => 'максимальная скорость, уз', 'model' => 'max_speed'])
     </div>
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'крейсерская скорость, узлы', 'model' => 'cruising_speed'])
+        @include('modules.input', ['title' => 'крейсерская скорость, уз', 'model' => 'cruising_speed'])
     </div>
     <div class="col-sm-4">
-        @include('modules.input', ['title' => 'запас хода', 'model' => 'fuel_consumption'])
+        @include('modules.input', ['title' => 'запас хода, nm', 'model' => 'fuel_consumption'])
     </div>
 </div>
 
@@ -51,19 +51,19 @@
 <h4 style='margin: 40px 0 10px'>Размеры</h4>
 <div class="row mb flex-list">
     <div>
-        @include('modules.input', ['title' => 'габаритная длина', 'model' => 'length'])
+        @include('modules.input', ['title' => 'габаритная длина, м', 'model' => 'length'])
     </div>
     <div>
-        @include('modules.input', ['title' => 'ширина, бимс', 'model' => 'width'])
+        @include('modules.input', ['title' => 'ширина (бимс), м', 'model' => 'width'])
     </div>
     <div>
         @include('modules.input', ['title' => 'осадка, м', 'model' => 'draught'])
     </div>
     <div>
-        @include('modules.input', ['title' => 'объем баков для воды', 'model' => 'water_capacity'])
+        @include('modules.input', ['title' => 'объем баков для воды, л', 'model' => 'water_capacity'])
     </div>
     <div style='margin: 0'>
-        @include('modules.input', ['title' => 'объем топливного бака', 'model' => 'gas_capacity'])
+        @include('modules.input', ['title' => 'объем топливного бака, л', 'model' => 'gas_capacity'])
     </div>
 </div>
 

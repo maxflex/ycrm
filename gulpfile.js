@@ -31,9 +31,8 @@ fileFromBower = (file) => {
         .browserSync({
             port: 8091,
             open: 'external',
-            host: 'ycrm.app',
-            proxy: 'https://ycrm.app:8090',
-            https: true
+            host: 'ycrm.localhost',
+            proxy: 'http://ycrm.localhost:8090'
         })
          .sass('app.scss')
          .copy(fileFromBower('ng-image-gallery/res/icons'), 'public/img/icons')
