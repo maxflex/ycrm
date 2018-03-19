@@ -45,7 +45,8 @@ class Yacht extends Model
         "photos",
         "manufacturer",
         "gas_type",
-        "staff_beds"
+        "staff_beds",
+        "prices"
     ];
 
     protected $commaSeparated = [

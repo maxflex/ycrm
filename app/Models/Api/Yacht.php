@@ -37,6 +37,7 @@ class Yacht extends Model
         'charterType',
         'picturesURL',
         'mainPictureUrl',
+        'loa'
     ];
 
     public function setPicturesURLAttribute($val)

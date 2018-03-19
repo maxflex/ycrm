@@ -130,6 +130,12 @@
 
 <div class="row mb">
     <div class="col-sm-12">
+        @include('modules.input', ['title' => 'цены', 'model' => 'prices', 'textarea' => true])
+    </div>
+</div>
+
+<div class="row mb">
+    <div class="col-sm-12">
         @include('modules.input', ['title' => 'описание яхты', 'model' => 'description', 'textarea' => true])
     </div>
 </div>
