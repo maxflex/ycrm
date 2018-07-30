@@ -151,7 +151,7 @@ class User extends Model
 
     public function isBanned()
     {
-        return $this->allowed(\Shared\Rights::WSTAT_BANNED);
+        return $this->allowed(\Shared\Rights::ERC_BANNED);
     }
 
     /**
