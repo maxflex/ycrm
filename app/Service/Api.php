@@ -9,6 +9,7 @@ class Api {
 
     const COMPANIES = 'charterCompanies';
     const LOCATIONS = 'locations';
+    const YACHT_MODELS = 'yachtModels';
     const YACHTS = 'yachts/'; // {charterCompanyId}
 
     public static function call($method, $data = [])

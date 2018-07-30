@@ -42,7 +42,13 @@ class ApiSync extends Command
      */
     public function handle()
     {
+        // Yacht models
+        $this->info('Getting models...');
+        $models = Api::call(Api::YACHT_MODELS);
+        $models = collect($models['models']);
+
         // Charter companies
+        $this->info('Getting companies & yachts...');
         $companies = Api::call(Api::COMPANIES);
 
         Company::truncate();
@@ -53,6 +59,8 @@ class ApiSync extends Command
             Yacht::truncate();
             Price::truncate();
             foreach($company_yachts['yachts'] as $yacht) {
+                // получаем доп. информацию о яхте
+                $yacht['loa'] = $models->where('id', $yacht['id'])->first()['loa'];
                 Yacht::create($yacht);
                 foreach($yacht['seasonSpecificData'][0]['prices'] as $price) {
                     $price['yacht_id'] = $yacht['id'];
@@ -62,6 +70,7 @@ class ApiSync extends Command
         }
 
         // Locations
+        $this->info('Getting locations...');
         Location::truncate();
 
         $locations = Api::call(Api::LOCATIONS);
