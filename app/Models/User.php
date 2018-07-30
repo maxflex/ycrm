@@ -9,17 +9,8 @@ class User extends Model
     protected $connection = 'egecrm';
     protected $table = 'admins';
 
-    protected $fillable = [
-        'login',
-        'password',
-        'color',
-        'type',
-        'id_entity',
-    ];
 
     protected $commaSeparated = ['rights'];
-
-    public $timestamps = false;
 
     const USER_TYPE    = 'USER';
     const DEFAULT_COLOR = 'black';
@@ -29,11 +20,6 @@ class User extends Model
         'id'    => 0,
         'login' => 'system',
     ];
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = static::_password($value);
-    }
 
     /**
      * Если пользователь заблокирован,то его цвет должен быть черным
