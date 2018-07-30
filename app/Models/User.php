@@ -7,6 +7,7 @@ use \Shared\Model;
 class User extends Model
 {
     protected $connection = 'egecrm';
+    protected $table = 'admins';
 
     protected $fillable = [
         'login',
@@ -51,18 +52,36 @@ class User extends Model
      */
     public static function login($data)
     {
-        $User = User::active()->where([
-            'login'         => $data['login'],
-            'password'      => static::_password($data['password']),
-        ]);
+        $query = dbEgecrm('users')->where('email', $data['login']);
 
-        if ($User->exists()) {
-            $user = $User->first();
-            if ($user->allowed(\Shared\Rights::WORLDWIDE_ACCESS) || User::fromOffice()) {
+         # проверка логина
+        if ($query->exists()) {
+            $user_id = $query->value('id_entity');
+        } else {
+            // self::log(null, 'failed_login', 'неверный логин', ['login' => $data['login']]);
+            return false;
+        }
+
+        # проверка пароля
+        $query->where('password', static::_password($data['password']));
+        if (! $query->exists()) {
+            // self::log($user_id, 'failed_login', 'неверный пароль');
+            return false;
+        }
+
+        $user = self::find($query->value('id_entity'));
+
+        if ($user->isBanned()) {
+            // self::log($user_id, 'failed_login', 'пользователь заблокирован');
+        } else {
+            $allowed_to_login = $user->allowedToLogin();
+            # из офиса или есть доступ вне офиса
+            if ($allowed_to_login) {
                 $_SESSION['user'] = $user;
                 return true;
             }
         }
+
         return false;
     }
 
@@ -71,15 +90,21 @@ class User extends Model
         unset($_SESSION['user']);
     }
 
+    public static function id()
+    {
+        return User::fromSession()->id;
+    }
+
     /*
 	 * Проверяем, залогинен ли пользователь
 	 */
 	public static function loggedIn()
 	{
-		return isset($_SESSION["user"]) // пользователь залогинен
-            && ! User::isBlocked()      // и не заблокирован
-            && User::worldwideAccess(); // и можно входить
+        return isset($_SESSION["user"]) && $_SESSION["user"] 	// пользователь залогинен
+            && ! User::fromSession()->isBanned()      			// и не заблокирован
+            && User::fromSession()->allowedToLogin(); 			// и можно входить
 	}
+
 
     /*
 	 * Пользователь из сессии
@@ -133,25 +158,14 @@ class User extends Model
      * Get real users
      *
      */
-    public static function scopeReal($query)
-    {
-        return $query->where('type', static::USER_TYPE);
-    }
-
-    /**
-     * Get real users
-     *
-     */
     public static function scopeActive($query)
     {
-        return $query->real()->whereRaw('NOT FIND_IN_SET(' . \Shared\Rights::ERC_BANNED . ', rights)');
+        return $query->whereRaw('NOT FIND_IN_SET(' . \Shared\Rights::ERC_BANNED . ', rights)');
     }
 
-    public static function isBlocked()
+    public function isBanned()
     {
-        return User::whereId(User::fromSession()->id)
-                ->whereRaw('FIND_IN_SET(' . \Shared\Rights::ERC_BANNED . ', rights)')
-                ->exists();
+        return $this->allowed(\Shared\Rights::WSTAT_BANNED);
     }
 
     /**
@@ -163,20 +177,34 @@ class User extends Model
     }
 
     /**
-     * Вход из офиса или включена настройка «доступ отовсюду»
-     */
-    public static function worldwideAccess()
-    {
-        return User::fromOffice() || User::whereId(User::fromSession()->id)
-                ->whereRaw('FIND_IN_SET(' . \Shared\Rights::WORLDWIDE_ACCESS . ', rights)')
-                ->exists();
-    }
-
-    /**
      * User has rights to perform the action
      */
     public function allowed($right)
     {
         return in_array($right, $this->rights);
     }
+
+    /**
+	 * Можно ли логиниться с этого IP?
+	 */
+	public function allowedToLogin()
+	{
+        if (app('env') === 'local') {
+            return (object)[
+                'confirm_by_sms' => false
+            ];
+        }
+
+        $current_ip = ip2long($_SERVER['HTTP_X_REAL_IP']);
+        $admin_ips = dbEgecrm('admin_ips')->where('id_admin', $this->id)->get();
+        foreach($admin_ips as $admin_ip) {
+            $ip_from = ip2long(trim($admin_ip->ip_from));
+            $ip_to = ip2long(trim($admin_ip->ip_to ?: $admin_ip->ip_from));
+            if ($current_ip >= $ip_from && $current_ip <= $ip_to) {
+                return $admin_ip;
+            }
+        }
+
+        return false;
+	}
 }
